@@ -6,7 +6,7 @@ from fastapi import HTTPException, status
 
 def create(request: schemas.Comment,creator_id:int, db: Session):
     new_comment = models.Comment(
-        text=request.text, kategori=request.kategori, creator_id=request.creator_id
+        text=request.text, creator_id=creator_id
     )
     db.add(new_comment)
     db.commit()

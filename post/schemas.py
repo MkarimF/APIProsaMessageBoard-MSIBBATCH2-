@@ -3,17 +3,16 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
+    id:int
     username: str
     email: str
     password: str
 
 
 class Post(BaseModel): 
-    judul: str
-    isi: str
-    kategori: str
-
-
+    title: str
+    text: str
+    
 class Comment(BaseModel):
     isi: str
 
@@ -21,14 +20,14 @@ class Comment(BaseModel):
 class ShowUser(BaseModel):
     username: str
     email: str
-    posts: List[Post] = []
+    post: List[Post] = []
 
     class Config:
         orm_mode = True
 
 
 class ShowComment(BaseModel):
-    isi: str
+    text: str
     Commentator: List[Comment] = []
 
     class Config:
@@ -36,13 +35,12 @@ class ShowComment(BaseModel):
 
 
 class ShowPost(BaseModel):
-    kategori: str
-    isi: str
+    text: str
     creator: ShowUser
     comment: ShowComment
     
 class Login(BaseModel):
-    username : str
+    email : str
     password : str
     
 class Token(BaseModel):
@@ -51,4 +49,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    email: Optional[str] = None
+    id : Optional[int] = None

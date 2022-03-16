@@ -1,4 +1,3 @@
-from turtle import title
 from sqlalchemy.orm import Session
 from .. import models, schemas
 from fastapi import HTTPException, status
@@ -9,9 +8,9 @@ def get_all(db: Session):
     return post
 
 
-def create(request: schemas.Post, db: Session):
+def create(request: schemas.Post,user_id:int, db: Session):
     new_post = models.Post(
-        title=request.title, body=request.body, user_id=request.user_id
+        title=request.title, text=request.text,user_id=user_id
     )
     db.add(new_post)
     db.commit()

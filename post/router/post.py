@@ -9,24 +9,24 @@ get_db = database.get_db
 
 
 @router.get("/", response_model=List[schemas.ShowPost])
-def all(
+def all_post(
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
 ):
     return post.get_all(db)
 
 
-@router.post("/")
-def create(
+@router.post("/",response_model=schemas.ShowPost)
+def create_post(
     request: schemas.Post,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
 ):
-    return post.create(request, db)
+    return post.create(request,current_user, db)
 
 
 @router.delete("/{id}")
-def erase(
+def erase_post(
     id,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
@@ -35,7 +35,7 @@ def erase(
 
 
 @router.put("/{id}")
-def update(
+def update_post(
     id,
     request: schemas.Post,
     db: Session = Depends(get_db),
@@ -45,7 +45,7 @@ def update(
 
 
 @router.get("/{id}")
-def show(
+def show_post(
     id,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
