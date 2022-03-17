@@ -27,16 +27,16 @@ def get_user(id: int, db: Session = Depends(get_db)):
     return user.show(id, db)
 
 
-@router.get("/{id}/profile_picture", responses={
-    "200": {
-        "content": {
-            "images/jpeg": {}
-        }
-    }
-})
-def get_user_profile_picture(id: int, db: Session = Depends(get_db)):
-    _user = user.show(id, db)
+# @router.get("/{id}/profile_picture", responses={
+#     "200": {
+#         "content": {
+#             "images/jpeg": {}
+#         }
+#     }
+# })
+# def get_user_profile_picture(id: int, db: Session = Depends(get_db)):
+#     _user = user.show(id, db)
 
-    with open(_user.profile_picture_path, "rb") as f:
-        mimetype, _ = mimetypes.guess_type(_user.profile_picture_path)
-        return Response(content=f.read(), media_type=mimetype)
+#     with open(_user.profile_picture_path, "rb") as f:
+#         mimetype, _ = mimetypes.guess_type(_user.profile_picture_path)
+#         return Response(content=f.read(), media_type=mimetype)
