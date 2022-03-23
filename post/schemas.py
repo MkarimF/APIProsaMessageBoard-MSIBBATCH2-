@@ -13,7 +13,8 @@ class Post(BaseModel):
     text: str
     
 class Comment(BaseModel):
-    isi: str
+    post_id:int
+    text: str
 
 
 class ShowUser(BaseModel):

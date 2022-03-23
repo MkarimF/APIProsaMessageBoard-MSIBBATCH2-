@@ -4,6 +4,10 @@ from fastapi import HTTPException, status
 from ..hashing import Hash
 
 
+def get_all(db: Session):
+    user = db.query(models.User).all()
+    return user
+
 def create(request: schemas.User, db: Session):
     new_user = models.User(
         username=request.username,

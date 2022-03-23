@@ -16,13 +16,13 @@ def all_post(
     return post.get_all(db)
 
 
-@router.post("/",response_model=schemas.ShowPost)
+@router.post("/")
 def create_post(
     request: schemas.Post,
     db: Session = Depends(get_db),
-    current_user: schemas.User = Depends(oauth2.get_current_user),
+    current_user: schemas.TokenData = Depends(oauth2.get_current_user),
 ):
-    return post.create(request,current_user, db)
+    return vars(post.create(request,current_user.id, db))
 
 
 @router.delete("/{id}")

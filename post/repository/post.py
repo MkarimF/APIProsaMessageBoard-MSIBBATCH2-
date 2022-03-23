@@ -37,7 +37,7 @@ def update(id: int, request: schemas.Post, db: Session):
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id{id} not found"
         )
 
-    post.update({"text": request.text, "kategori": request.kategori})
+    post.update({"title": request.title, "text" :request.text})
     db.commit()
     return "updated"
 
