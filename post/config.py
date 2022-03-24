@@ -2,7 +2,7 @@ from pydantic import BaseSettings
 
 
 class DatabaseConfig(BaseSettings):
-    url: str = "postgresql://postgres: @localhost/db_LandingPage"
+    url: str = "postgresql://postgresql: @localhost/db_LandingPage"
 
     class Config:
         env_prefix = "database_"
