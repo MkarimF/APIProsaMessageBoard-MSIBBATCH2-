@@ -3,6 +3,9 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from fastapi import HTTPException, status
 
+def get_all(db: Session):
+    comment = db.query(models.Comment).all()
+    return comment
 
 def create(request: schemas.Comment,creator_id:int, db: Session):
     new_comment = models.Comment(
