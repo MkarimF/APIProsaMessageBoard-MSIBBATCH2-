@@ -1,1 +1,1 @@
-web: gunicorn post.main: app
+web: gunicorn fas-api-postgresql.post.main: app
