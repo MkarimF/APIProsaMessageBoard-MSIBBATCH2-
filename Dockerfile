@@ -4,9 +4,13 @@ FROM python:3.8
 
 ADD main.py .post
 
-RUN pip install requirements.txt
+COPY requirements.txt requirements.txt
 
-COPY post/ /post
+RUN pip install -r requirements.txt
+
+
+
+COPY . .
 
 
 

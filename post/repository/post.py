@@ -20,14 +20,15 @@ def create(request: schemas.Post,user_id:int, db: Session):
 
 def destroy(id: int, db: Session):
     post = db.query(models.Post).filter(models.Post.id == id)
+    comment = db.query(models.Comment).filter(models.Comment.post_id == id)
     if not post.first():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id {id} not found"
         )
-
+    comment.delete(synchronize_session=False)
     post.delete(synchronize_session=False)
     db.commit()
-    return "done"
+    return HTTPException(status_code=status.HTTP_202_ACCEPTED,detail=f"post with id {id} was deleted ",headers=[])
 
 
 def update(id: int, request: schemas.Post, db: Session):
@@ -36,10 +37,12 @@ def update(id: int, request: schemas.Post, db: Session):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id{id} not found"
         )
-
+    
     post.update({"title": request.title, "text" :request.text})
     db.commit()
-    return "updated"
+    
+    return HTTPException(status_code=status.HTTP_202_ACCEPTED,detail=f"post with id {id} was updated with title:{request.title} and text:{request.text}",headers=[])
+    
 
 
 def show(id: int, db: Session):

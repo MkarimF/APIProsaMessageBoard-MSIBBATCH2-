@@ -3,8 +3,14 @@ services:
   app:
     image:  landing-page:latest
     environment:
-      - myLandingpage
+      DATABASE_URL: postgresql://post:password@database/post_db
     ports:
       -"80:8000"
     volumes:
       - ./runtime/post
+  database:
+    image: postgres:13.6
+    environment:
+      POSTGRES_USER: post
+      POSTGRES_USER: post_db
+      POSTGRES_PASSWORD: password

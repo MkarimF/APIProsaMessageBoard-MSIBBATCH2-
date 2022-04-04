@@ -35,9 +35,13 @@ class ShowComment(BaseModel):
 
 
 class ShowPost(BaseModel):
+    title:str
     text: str
-    creator: ShowUser
-    comment: ShowComment
+    Creator: List[User] = []
+
+    class Config:
+        orm_mode = True
+    
     
 class Login(BaseModel):
     email : str
