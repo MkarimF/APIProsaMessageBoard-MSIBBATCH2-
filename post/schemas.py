@@ -20,24 +20,24 @@ class Comment(BaseModel):
 class ShowUser(BaseModel):
     username: str
     email: str
-    post: List[Post] = []
-
-    class Config:
-        orm_mode = True
+    
 
 
 class ShowComment(BaseModel):
     text: str
-    Commentator: List[Comment] = []
+    post_id : int
 
     class Config:
         orm_mode = True
 
-
+class UserPost(BaseModel):
+    user_id : int
+    username: str
+    
 class ShowPost(BaseModel):
     title:str
     text: str
-    Creator: List[User] = []
+    user_id:int
 
     class Config:
         orm_mode = True
