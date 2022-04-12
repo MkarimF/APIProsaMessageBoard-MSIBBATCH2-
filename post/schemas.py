@@ -9,6 +9,7 @@ class User(BaseModel):
 
 
 class Post(BaseModel): 
+    id:int
     title: str
     text: str
     
