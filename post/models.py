@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlmodel import Relationship
 from .database import Base
 from sqlalchemy.orm import relationship
 
@@ -11,7 +12,8 @@ class Post(Base):
     text = Column(String)
     user_id = Column(Integer, ForeignKey("user.id"))
     creator = relationship("User")
-
+    # commentator = Column(Integer, ForeignKey("comments.post_id"))
+    # creator_comment = relationship("Comment")
 
 class User(Base):
     __tablename__ = "user"

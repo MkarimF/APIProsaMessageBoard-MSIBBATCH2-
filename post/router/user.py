@@ -1,11 +1,7 @@
 import os
-from uuid import uuid4
-
-import mimetypes
-
 from typing import List
 from starlette.responses import Response
-from fastapi import APIRouter, Depends, UploadFile,Form
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from .. import database, schemas,oauth2
@@ -13,9 +9,6 @@ from ..repository import user
 
 router = APIRouter(prefix="/user", tags=["User"])
 get_db = database.get_db
-
-MEDIA_ROOT = "media"
-IMAGE_ROOT = os.path.join(MEDIA_ROOT, "/images")
 
 @router.get("/", response_model=List[schemas.ShowUser])
 def all_user(

@@ -3,7 +3,6 @@ from .. import models, schemas
 from fastapi import HTTPException, status
 from ..hashing import Hash
 
-
 def get_all(db: Session):
     user = db.query(models.User).all()
     return user
@@ -18,7 +17,6 @@ def create(request: schemas.User, db: Session):
     db.commit()
     db.refresh(new_user)
     return new_user
-
 
 def show(id: int, db: Session):
     user = db.query(models.User).filter(models.User.id == id).first()
