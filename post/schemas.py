@@ -39,7 +39,7 @@ class ShowPost(BaseModel):
     title :str
     text : str
     user_id : int
-    post_id : int
+    id : int
 
     class Config:
         orm_mode = True
