@@ -17,6 +17,7 @@ def create(request: schemas.Comment,creator_id:int, db: Session):
     return new_comment
 
 
+
 def show(id: int, db: Session):
     comment = db.query(models.Comment).filter(models.Comment.id == id).first()
     if not comment:
