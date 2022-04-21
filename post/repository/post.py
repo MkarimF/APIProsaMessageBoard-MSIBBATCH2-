@@ -11,7 +11,7 @@ def get_all(db: Session):
 def get_all_tab(db:Session):
     stmt = select(models.Post).options(joinedload(models.Post.comments),joinedload(models.Post.comments,models.Comment.creator))
     result = db.execute(stmt).scalars().unique()
-    # result = db.query(models.Post).all()
+
     return result
 
 def create(request: schemas.Post,user_id:int, db: Session):
