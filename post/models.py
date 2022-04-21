@@ -11,6 +11,7 @@ class Post(Base):
     text = Column(String)
     user_id = Column(Integer, ForeignKey("user.id"))
     creator = relationship("User")
+    comments = relationship("Comment", back_populates="post")
 
 
 class User(Base):

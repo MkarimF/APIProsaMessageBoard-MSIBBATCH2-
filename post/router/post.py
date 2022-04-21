@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from fastapi import APIRouter, Depends
 from .. import schemas, database, oauth2
 from typing import List
@@ -16,11 +15,13 @@ def all_post(
 ):
     return post.get_all(db)
 
-@router.get("/alltab",response_model=NULL)
+@router.get("/alltab",response_model_exclude={'comments':{'__all__':{'creator':{'password'}}}})
 def alltab(
     db:Session = Depends(get_db),
-    current_user: schemas.User = Depends(oauth2.get_current_user),):
-    return post.get_all_tab(db)
+    current_user: schemas.User = Depends(oauth2.get_current_user)):
+    result = post.get_all_tab(db)
+    
+    return list(result)
 
 @router.post("/")
 def create_post(

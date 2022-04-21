@@ -1,6 +1,5 @@
-from xml.etree.ElementTree import Comment
-from requests import post
-from sqlalchemy.orm import Session
+from sqlalchemy import select
+from sqlalchemy.orm import Session,joinedload
 from .. import models, schemas
 from fastapi import HTTPException, status
 
@@ -10,14 +9,10 @@ def get_all(db: Session):
     return post
 
 def get_all_tab(db:Session):
-    # q = db.query(models.User).join(models.Post, models.Post.user_id).join(models.Comment, models.Comment.post_id).\
-    # filter(models.User.id == models.Post.user_id , models.Comment.post_id == models.Post.id).all()
-    
-    join_query = db.query(models.User, models.Comment, models.Post).join(models.Post, models.Post.user_id == models.User.id).join(models.Comment, models.Comment.post_id == models.Post.id)
-
-                    
-
-    return join_query
+    stmt = select(models.Post).options(joinedload(models.Post.comments),joinedload(models.Post.comments,models.Comment.creator))
+    result = db.execute(stmt).scalars().unique()
+    # result = db.query(models.Post).all()
+    return result
 
 def create(request: schemas.Post,user_id:int, db: Session):
     new_post = models.Post(

@@ -43,43 +43,6 @@ class ShowPost(BaseModel):
     
     class Config:
         orm_mode = True
-        
-
-class showAll(BaseModel):
-    title:str
-    text: str
-    user_id:int
-    id : int
-    username:str
-    email:str
-    comment_id:int
-    
-    
-    
-# [
-#   {
-#     "title": "string",
-#     "text": "string",
-#     "user_id": 0,
-#     "id": 0,
-#     "creator": {
-#       "username": "string",
-#       "email": "string"
-#     },
-#     "Comments": [
-#         {
-#         "title": "string",
-#         "text": "string",
-#         "user_id": 0,
-#         "id": 0,
-#         "creator": {
-#           "username": "string",
-#           "email": "string"
-#         },
-#       }
-#     ]
-#   }
-# ]    
     
 class Login(BaseModel):
     email : str
