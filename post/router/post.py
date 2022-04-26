@@ -1,5 +1,6 @@
+from unittest import result
 from fastapi import APIRouter, Depends
-from .. import schemas, database, oauth2
+from .. import schemas, database, oauth2,models
 from typing import List
 from sqlalchemy.orm import Session
 from ..repository import post
@@ -15,13 +16,24 @@ def all_post(
 ):
     return post.get_all(db)
 
-@router.get("/alltab",response_model_exclude={'comments':{'__all__':{'creator':{'password'}}}})
+
+def orm_to_comment(comment: models.Comment)->schemas.ShowComment:
+    
+    return schemas.ShowComment(text=comment.text,post_id=comment.post_id,creator=schemas.ShowUser(username=comment.creator.username,email=comment.creator.email))
+
+def orm_to_post(post: models.Post)->schemas.ShowPost:
+    
+    return schemas.ShowPost(title=post.title,text=post.text,user_id=post.user_id,id=post.id,comments=[orm_to_comment(comment) for comment in post.comments])
+
+
+@router.get("/alltab",response_model=List[schemas.ShowPost],response_model_exclude={"__all__":{"comments":{"__all__":{"post_id":...}}}})
 def alltab(
     db:Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user)):
     result = post.get_all_tab(db)
+    # return list(result)
     
-    return list(result)
+    return [orm_to_post(item) for item in result]
 
 @router.post("/")
 def create_post(
@@ -32,7 +44,7 @@ def create_post(
     return vars(post.create(request,current_user.id, db))
 
 
-@router.delete("/{id}")
+@router.delete("/{id}",)
 def erase_post(
     id,
     db: Session = Depends(get_db),
