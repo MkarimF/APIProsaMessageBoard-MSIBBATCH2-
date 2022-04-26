@@ -22,8 +22,6 @@ class ShowUser(BaseModel):
     username: str
     email: str
     
-    
-
 
 
 class ShowComment(BaseModel):
