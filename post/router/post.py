@@ -26,7 +26,7 @@ def orm_to_post(post: models.Post)->schemas.ShowPost:
     return schemas.ShowPost(title=post.title,text=post.text,user_id=post.user_id,id=post.id,comments=[orm_to_comment(comment) for comment in post.comments])
 
 
-@router.get("/alltab",response_model=List[schemas.ShowPost],response_model_exclude={"__all__":{"comments":{"__all__":{"post_id":...}}}})
+@router.get("/alltab",response_model=List[schemas.ShowPost])
 def alltab(
     db:Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user)):
@@ -34,6 +34,7 @@ def alltab(
     # return list(result)
     
     return [orm_to_post(item) for item in result]
+# response_model_exclude={"__all__":{"comments":{"__all__":{"post_id":...}}}}
 
 @router.post("/")
 def create_post(
