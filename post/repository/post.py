@@ -3,11 +3,6 @@ from sqlalchemy.orm import Session,joinedload
 from .. import models, schemas
 from fastapi import HTTPException, status
 
-
-def get_all(db: Session):
-    post = db.query(models.Post).all()
-    return post
-
 def get_all_tab(db:Session):
     stmt = select(models.Post).options(joinedload(models.Post.comments),joinedload(models.Post.comments,models.Comment.creator))
     result = db.execute(stmt).scalars().unique()

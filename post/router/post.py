@@ -9,16 +9,10 @@ router = APIRouter(prefix="/post", tags=["Posting"])
 get_db = database.get_db
 
 
-@router.get("/", response_model=List[schemas.ShowPost])
-def all_post(
-    db: Session = Depends(get_db),
-    current_user: schemas.User = Depends(oauth2.get_current_user),
-):
-    return post.get_all(db)
 
 def orm_to_comment(comment: models.Comment)->schemas.ShowComment:
     
-    return schemas.ShowComment(text=comment.text,post_id=comment.post_id,creator=schemas.ShowUser(username=comment.creator.username,email=comment.creator.email))
+    return schemas.ShowComment(id=comment.id,text=comment.text,post_id=comment.post_id,creator=schemas.ShowUser(username=comment.creator.username,email=comment.creator.email))
 
 def orm_to_post(post: models.Post)->schemas.ShowPost:
     

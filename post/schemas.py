@@ -21,8 +21,12 @@ class Comment(BaseModel):
 class ShowUser(BaseModel):
     username: str
     email: str
+    class Config:
+        orm_mode=True
+    
     
 class ShowComment(BaseModel):
+    id:int
     text: str
     post_id : int
     creator:ShowUser
