@@ -22,20 +22,13 @@ class ShowUser(BaseModel):
     username: str
     email: str
     
-
-
 class ShowComment(BaseModel):
     text: str
     post_id : int
     creator:ShowUser
     class Config:
         orm_mode = True
-        
 
-class UserPost(BaseModel):
-    user_id : int
-    username: str
-    
 class ShowPost(BaseModel):
     title:str
     text: str

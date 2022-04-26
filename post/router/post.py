@@ -16,7 +16,6 @@ def all_post(
 ):
     return post.get_all(db)
 
-
 def orm_to_comment(comment: models.Comment)->schemas.ShowComment:
     
     return schemas.ShowComment(text=comment.text,post_id=comment.post_id,creator=schemas.ShowUser(username=comment.creator.username,email=comment.creator.email))
@@ -24,7 +23,6 @@ def orm_to_comment(comment: models.Comment)->schemas.ShowComment:
 def orm_to_post(post: models.Post)->schemas.ShowPost:
     
     return schemas.ShowPost(title=post.title,text=post.text,user_id=post.user_id,id=post.id,comments=[orm_to_comment(comment) for comment in post.comments])
-
 
 @router.get("/alltab",response_model=List[schemas.ShowPost])
 def alltab(
