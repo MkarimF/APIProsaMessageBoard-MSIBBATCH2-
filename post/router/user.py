@@ -11,10 +11,8 @@ router = APIRouter(prefix="/user", tags=["User"])
 get_db = database.get_db
 
 @router.get("/", response_model=List[schemas.ShowUser])
-def all_user(
-    db: Session = Depends(get_db),
-    current_user: schemas.User = Depends(oauth2.get_current_user),
-):
+def all_user(db: Session = Depends(get_db),
+    current_user: schemas.User = Depends(oauth2.get_current_user)):
     return user.get_all(db)
 
 @router.post("/", response_model=schemas.ShowUser)
