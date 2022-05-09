@@ -21,7 +21,7 @@ def orm_to_post(post: models.Post)->schemas.ShowPost:
 @router.get("/alltab",response_model=List[schemas.ShowPost])
 def alltab(
     db:Session = Depends(get_db),
-    current_user: schemas.User = Depends(oauth2.get_current_user)):
+    current_user: schemas.User = Depends(oauth2.get_current_user))->schemas.ShowPost:
     result = post.get_all_tab(db)
     # return list(result)
     
@@ -33,7 +33,7 @@ def create_post(
     request: schemas.Post,
     db: Session = Depends(get_db),
     current_user: schemas.TokenData = Depends(oauth2.get_current_user),
-):
+)->schemas.Post:
     return vars(post.create(request,current_user.id, db))
 
 
@@ -52,7 +52,7 @@ def update_post(
     request: schemas.Post,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
-):
+)->schemas.Post:
     return post.update(id, request, db)
 
 
@@ -61,5 +61,5 @@ def show_post(
     id,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
-):
+)->schemas.ShowPost:
     return post.show(id, db)

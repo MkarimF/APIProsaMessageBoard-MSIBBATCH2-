@@ -1,8 +1,8 @@
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from . import schemas
+from . import schemas,creds
 
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 15
 
@@ -11,13 +11,13 @@ def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, creds.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 
 def verify_token(token: str, credentials_exception):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, creds.SECRET_KEY, algorithms=[ALGORITHM])
         username:str=payload.get("username")
         email: str = payload.get("email")
         id:int = payload.get("id")

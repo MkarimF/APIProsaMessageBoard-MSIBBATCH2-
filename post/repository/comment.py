@@ -23,7 +23,7 @@ def show(id: int, db: Session):
     if not comment:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"User with the id {id} is not available",
+            detail=f"Comment with the id {id} is not available",
         )
 
     return comment

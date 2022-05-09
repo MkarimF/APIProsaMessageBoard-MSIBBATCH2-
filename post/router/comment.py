@@ -14,7 +14,7 @@ def create_comment(
     request: schemas.Comment,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(oauth2.get_current_user),
-):
+)->schemas.Comment:
     return comment.create(request,current_user.id, db)
 
 
@@ -23,10 +23,10 @@ def get_comment(
     id: int,
     db: Session = Depends(get_db),
     current_user: schemas.Comment = Depends(oauth2.get_current_user),
-):
+)->schemas.ShowComment:
     return comment.show(id, db)
 
 
 @router.get("/", response_model=List[schemas.ShowComment])
-def all(db: Session = Depends(get_db)):
+def all(db: Session = Depends(get_db))->schemas.ShowComment:
     return comment.get_all(db)
