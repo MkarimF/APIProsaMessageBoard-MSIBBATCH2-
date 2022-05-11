@@ -45,7 +45,7 @@ class ShowPost(BaseModel):
         orm_mode = True
 
 class Login(BaseModel):
-    email : str
+    username : str
     password : str
     
 class Token(BaseModel):
