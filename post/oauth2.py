@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from . import token
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/oauth2")
 
 
 def get_current_user(data: str = Depends(oauth2_scheme)):
@@ -16,7 +16,7 @@ def get_current_user(data: str = Depends(oauth2_scheme)):
 # class HTTPBearer(get_current_user):
 #     def __init__(
 #         self,
-#         *,
+        # *,
 #         bearerFormat: Optional[str] = None,
 #         scheme_name: Optional[str] = None,
 #         description: Optional[str] = None,
