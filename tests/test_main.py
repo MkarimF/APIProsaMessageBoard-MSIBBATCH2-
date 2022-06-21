@@ -1,8 +1,4 @@
-import json
-from turtle import title
-import pytest
 from contextlib import contextmanager
-from urllib import response
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -29,6 +25,4 @@ def embedded_db():
 
     with patch("post.database.Sessionlocal", Sessionlocal):
         Base.metadata.create_all(engine)
-        yield
-
-
+        yield engine
