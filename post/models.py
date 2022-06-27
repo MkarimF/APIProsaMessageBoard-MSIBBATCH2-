@@ -1,6 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
-from .database import Base
 from sqlalchemy.orm import relationship
+
+from .database import Base
 
 
 class Post(Base):
@@ -21,8 +22,8 @@ class User(Base):
     username = Column(String)
     email = Column(String)
     password = Column(String)
-    
-    
+
+
 class Comment(Base):
     __tablename__ = "comments"
 
@@ -31,5 +32,4 @@ class Comment(Base):
     creator_id = Column(Integer, ForeignKey(User.id))
     creator = relationship("User")
     post_id = Column(Integer, ForeignKey(Post.id))
-    post = relationship("Post",back_populates="comments")
-
+    post = relationship("Post", back_populates="comments")

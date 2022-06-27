@@ -1,4 +1,4 @@
-from pydantic import BaseSettings,validator
+from pydantic import BaseSettings, validator
 
 
 class DatabaseConfig(BaseSettings):
@@ -7,7 +7,7 @@ class DatabaseConfig(BaseSettings):
     @validator("url")
     def fix_scheme(cls, v):
         return v.replace("postgres://", "postgresql://")
-    
+
     class Config:
         env_prefix = "database_"
         env_file = ".env"

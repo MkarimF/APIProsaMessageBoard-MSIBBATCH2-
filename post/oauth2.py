@@ -1,9 +1,10 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+
 from . import token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/oauth2/")
-oauth2_scheme2= OAuth2PasswordBearer(tokenUrl="/login/")
+oauth2_scheme2 = OAuth2PasswordBearer(tokenUrl="/login/")
 
 
 def get_current_user(data: str = Depends(oauth2_scheme2)):
@@ -13,6 +14,8 @@ def get_current_user(data: str = Depends(oauth2_scheme2)):
         headers={"WWW-Authenticate": "Bearer"},
     )
     return token.verify_token(data, credentials_exception)
+
+
 def get_current_user(data: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -24,7 +27,7 @@ def get_current_user(data: str = Depends(oauth2_scheme)):
 # class HTTPBearer(get_current_user):
 #     def __init__(
 #         self,
-        # *,
+# *,
 #         bearerFormat: Optional[str] = None,
 #         scheme_name: Optional[str] = None,
 #         description: Optional[str] = None,

@@ -1,4 +1,5 @@
-from contextlib import contextmanager
+import pytest
+
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -9,10 +10,12 @@ from post.database import Base
 from post.main import app
 
 
-client = TestClient(app)
+@pytest.fixture()
+def client() -> TestClient:
+    return TestClient(app)
 
 
-@contextmanager
+@pytest.fixture()
 def embedded_db():
     engine = create_engine(
         "sqlite://",

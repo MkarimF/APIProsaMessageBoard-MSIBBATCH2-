@@ -1,7 +1,8 @@
-from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from . import schemas,creds
 
+from jose import JWTError, jwt
+
+from . import schemas, creds
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 15
@@ -18,14 +19,14 @@ def create_access_token(data: dict):
 def verify_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, creds.SECRET_KEY, algorithms=[ALGORITHM])
-        username:str=payload.get("username")
+        username: str = payload.get("username")
         email: str = payload.get("email")
-        id:int = payload.get("id")
+        id: int = payload.get("id")
         if id is None:
             raise credentials_exception
-        print (payload)
-        token_data = schemas.TokenData(id=id,email=email,username=username)
-        
+        print(payload)
+        token_data = schemas.TokenData(id=id, email=email, username=username)
+
     except JWTError:
         raise credentials_exception
     return token_data
