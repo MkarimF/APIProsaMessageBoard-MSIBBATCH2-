@@ -23,6 +23,7 @@ class Comment(BaseModel):
 
 
 class ShowUser(BaseModel):
+    id:int
     username: str
     email: str
 

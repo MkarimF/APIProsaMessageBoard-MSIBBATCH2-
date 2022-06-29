@@ -4,13 +4,8 @@ def test_post_create(client, embedded_db):
         "email": "test_email1",
         "password": "test_password1"}
     initial_post1 = {
-        "user_id": 1,
         "title": "test_title1",
         "text": "test_text1"}
-    initial_post2 = {
-        "user_id": 1,
-        "title": "test_title2",
-        "text": "test_text2"}
     # membuat User 1
     response = client.post("/user/", json=initial_user_data1)
     assert response.status_code == 200
@@ -31,21 +26,12 @@ def test_post_create(client, embedded_db):
 
     # posted post-1
     response4 = client.post("/post/", json=initial_post1)
-    assert response4.status_code == 200
-
-    # posted post-2
-    response5 = client.post("/post/", json=initial_post2)
-    assert response5.status_code == 200
+    assert response4.status_code == 200    
 
     # assert data post1
     user_data_post1 = response4.json()
     assert user_data_post1["title"] == initial_post1["title"]
     assert user_data_post1["text"] == initial_post1["text"]
-
-    # assert data post2
-    user_data_post2 = response5.json()
-    assert user_data_post2["title"] == initial_post2["title"]
-    assert user_data_post2["text"] == initial_post2["text"]
 
 
 def test_get_all_posts(client, embedded_db):
@@ -53,25 +39,13 @@ def test_get_all_posts(client, embedded_db):
         "username": "test_user1",
         "email": "test_email1",
         "password": "test_password1"}
-    initial_user_data2 = {
-        "username": "test_user2",
-        "email": "test_email2",
-        "password": "test_password2"}
     initial_post1 = {
-        "user_id": 1,
         "title": "test_title1",
         "text": "test_text1"}
-    initial_post2 = {
-        "user_id": 1,
-        "title": "test_title2",
-        "text": "test_text2"}
     # create user 1
     response = client.post("/user/", json=initial_user_data1)
     assert response.status_code == 200
 
-    # create user 2
-    response2 = client.post("/user/", json=initial_user_data2)
-    assert response2.status_code == 200
 
     user_data1 = response.json()
     assert user_data1["username"] == initial_user_data1["username"]
@@ -89,15 +63,8 @@ def test_get_all_posts(client, embedded_db):
     response4 = client.post("/post/", json=initial_post1)
     assert response4.status_code == 200
 
-    # posted post ke-2
-    response7 = client.post("/post/", json=initial_post2)
-    assert response7.status_code == 200
-
-    post_data = response4.json()
-    user_id = post_data["id"]
-
     # get post-1
-    response6 = client.get(f"/post/{user_id}")
+    response6 = client.get("/post/alltab")
     assert response6.status_code == 200
 
 
@@ -111,11 +78,9 @@ def test_get_post_by_id(client, embedded_db):
         "email": "test_email2",
         "password": "test_password2"}
     initial_post1 = {
-        "user_id": 1,
         "title": "test_title1",
         "text": "test_text1"}
     initial_post2 = {
-        "user_id": 1,
         "title": "test_title2",
         "text": "test_text2"}
 
@@ -148,11 +113,11 @@ def test_get_post_by_id(client, embedded_db):
     assert user_data2["username"] == initial_user_data1["username"]
     assert user_data2["email"] == initial_user_data1["email"]
 
-    # login user yang sudah di created 2
+    # login user has been created 2
     response6 = client.post("/login", json={"username": "test_user2", "password": "test_password2"})
     assert response6.status_code == 200
 
-    # authentication pada user 2
+    # authentication token user 2
     client.headers["authorization"] = f"Bearer {response3.json()['access_token']}"
     
     # posted post data 2
@@ -183,11 +148,9 @@ def test_delete_post_by_id(client, embedded_db):
         "email": "test_email2",
         "password": "test_password2"}
     initial_post_user_data1 = {
-        "user_id": 1,
         "title": "test_title1",
         "text": "test_text1"}
     initial_post_user_data2 = {
-        "user_id": 1,
         "title": "test_title2",
         "text": "test_text2"}
     # create user 1

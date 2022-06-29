@@ -3,30 +3,16 @@ def test_create_comment(client, embedded_db):
         "username": "test_user1",
         "email": "test_email1",
         "password": "test_password1"}
-    initial_user_data2 = {
-        "username": "test_user2",
-        "email": "test_email2",
-        "password": "test_password2"}
-    initial_post_user_data1 = {
-        "user_id": 1,
+    initial_post_data1 = {
         "title": "test_title1",
         "text": "test_text1"}
-    initial_post_user_data2 = {
-        "user_id": 1,
-        "title": "test_title2",
-        "text": "test_text2"}
-    initial_comment_user_data1 = {
-        "creator_id": 1,
-        "post_id": 1,
+    initial_comment1 = {
         "text": "test_text1"}
 
     # create user 1
     response = client.post("/user/", json=initial_user_data1)
     assert response.status_code == 200
 
-    # create user 2
-    response2 = client.post("/user/", json=initial_user_data2)
-    assert response2.status_code == 200
     # inisialisasi user 1
     user_data = response.json()
     assert user_data["username"] == initial_user_data1["username"]
@@ -37,14 +23,14 @@ def test_create_comment(client, embedded_db):
     assert response3.status_code == 200
     client.headers["authorization"] = f"Bearer {response3.json()['access_token']}"
     # create post user 1
-    response4 = client.post("/post/", json=initial_post_user_data1)
+    response4 = client.post("/post/", json=initial_post_data1)
     assert response4.status_code == 200
-    # create post user 2
-    response5 = client.post("/post/", json=initial_post_user_data2)
-    assert response5.status_code == 200
+    
     # create comment user 1
-    response6 = client.post("/comment/", json=initial_comment_user_data1)
-    assert response6.status_code == 200
+    post_data = response4.json()
+    post_id = post_data["id"]
+    response5 = client.post("/comment/", json={"post_id": post_id, "text":initial_comment1["text"]})
+    assert response5.status_code == 200
 
 
 def test_get_comment_by_id(client, embedded_db):
@@ -52,13 +38,10 @@ def test_get_comment_by_id(client, embedded_db):
         "username": "test_user1",
         "email": "test_email1",
         "password": "test_password1"}
-    initial_post_user_data1 = {
-        "user_id": 1,
+    initial_post_data1 = {
         "title": "test_title1",
         "text": "test_text1"}
-    initial_comment_user_data1 = {
-        "creator_id": 1,
-        "post_id": 1,
+    initial_comment1 = {
         "text": "test_text1"}
 
     # create user 1
@@ -79,12 +62,16 @@ def test_get_comment_by_id(client, embedded_db):
     client.headers["authorization"] = f"Bearer {response3.json()['access_token']}"
     
     # create post user 1
-    response4 = client.post("/post/", json=initial_post_user_data1)
+    response4 = client.post("/post/", json=initial_post_data1)
     assert response4.status_code == 200
     
     # create comment
-    response5 = client.post("/comment/", json=initial_comment_user_data1)
+    post_data = response4.json()
+    post_id = post_data["id"]
+    response5 = client.post("/comment/", json={"post_id": post_id, "text":initial_comment1["text"]})
     assert response5.status_code == 200
+    
+    
     
     # show comment by id
     comment_data = response5.json()

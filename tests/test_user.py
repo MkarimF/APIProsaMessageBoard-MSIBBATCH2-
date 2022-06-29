@@ -16,7 +16,6 @@ def test_create_user(client, embedded_db):
 
 def test_get_id_user(client, embedded_db):
     initial_user_data = {
-        "id": 1,
         "username": "test_user",
         "email": "test@prosa.ai",
         "password": "test_password"}
@@ -32,7 +31,9 @@ def test_get_id_user(client, embedded_db):
     # auth user
     client.headers["authorization"] = f"Bearer {response2.json()['access_token']}"
     # get user by id
-    response3 = client.get("/user/1")
+    user_data2 = response.json()
+    user_id = user_data2["id"]
+    response3 = client.get(f"/user/{user_id}")
     assert response3.status_code == 200
     # assert user_data
     user_data = response3.json()
@@ -42,13 +43,11 @@ def test_get_id_user(client, embedded_db):
 
 def test_get_all_users(client, embedded_db):
     initial_user_data1 = {
-        "id": 1,
         "username": "test_user1",
         "email": "email1",
         "password": "test_password1",
     }
     initial_user_data2 = {
-        "id": 2,
         "username": "test_user2",
         "email": "email2",
         "password": "test_password2"}

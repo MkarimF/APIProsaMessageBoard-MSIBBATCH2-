@@ -1,5 +1,5 @@
 from unittest import result
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Path
 from .. import schemas, database, oauth2, models
 from typing import List
 from sqlalchemy.orm import Session
@@ -64,3 +64,7 @@ def update_post(
         current_user: schemas.User = Depends(oauth2.get_current_user),
 ) -> schemas.Post:
     return post.update(id, request, db)
+
+@router.get("/{id}/comments")
+def get_all_comments_of_a_post(post_id:int = Path(...,alias="id"))->List[schemas.ShowComment]:
+    raise NotImplementedError()
