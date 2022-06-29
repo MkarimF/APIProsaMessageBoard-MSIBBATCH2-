@@ -1,4 +1,5 @@
 def test_post_create(client, embedded_db):
+    # this test is to test the post creation
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",
@@ -35,6 +36,7 @@ def test_post_create(client, embedded_db):
 
 
 def test_get_all_posts(client, embedded_db):
+    # this test is to test get all posts
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",
@@ -69,6 +71,7 @@ def test_get_all_posts(client, embedded_db):
 
 
 def test_get_post_by_id(client, embedded_db):
+    # this test is to test get post by id
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",
@@ -139,6 +142,7 @@ def test_get_post_by_id(client, embedded_db):
 
 
 def test_delete_post_by_id(client, embedded_db):
+    # this test is to test delete post by id
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",
@@ -181,6 +185,7 @@ def test_delete_post_by_id(client, embedded_db):
 
 
 def test_update_post_by_id(client, embedded_db):
+    # this test is to test update post by id
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",

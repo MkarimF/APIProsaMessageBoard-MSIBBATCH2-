@@ -1,4 +1,5 @@
 def test_create_user(client, embedded_db):
+    # this test will fail if the user already exists
     initial_user_data = {
         "username": "test_user",
         "email": "test_user@prosa.ai",
@@ -15,6 +16,7 @@ def test_create_user(client, embedded_db):
 
 
 def test_get_id_user(client, embedded_db):
+    # this test ist to test the get user by id
     initial_user_data = {
         "username": "test_user",
         "email": "test@prosa.ai",
@@ -42,6 +44,7 @@ def test_get_id_user(client, embedded_db):
 
 
 def test_get_all_users(client, embedded_db):
+    # this test ist to test the get all users
     initial_user_data1 = {
         "username": "test_user1",
         "email": "email1",

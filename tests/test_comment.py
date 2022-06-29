@@ -1,4 +1,6 @@
 def test_create_comment(client, embedded_db):
+    # this test is to test the creation of comment with the post and user created first
+    
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",
@@ -34,6 +36,8 @@ def test_create_comment(client, embedded_db):
 
 
 def test_get_comment_by_id(client, embedded_db):
+    # this test ist to test the get comment by id
+    
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",
@@ -81,6 +85,7 @@ def test_get_comment_by_id(client, embedded_db):
 
 
 def test_get_comment_all(client, embedded_db):
+    # this test ist to test the get comment all
     initial_user_data1 = {
         "username": "test_user1",
         "email": "test_email1",

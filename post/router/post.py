@@ -65,6 +65,6 @@ def update_post(
 ) -> schemas.Post:
     return post.update(id, request, db)
 
-@router.get("/{id}/comments")
-def get_all_comments_of_a_post(post_id:int = Path(...,alias="id"))->List[schemas.ShowComment]:
-    raise NotImplementedError()
+# @router.get("/{id}/comments")
+# def get_all_comments_of_a_post(post_id:int = Path(...,alias="id"))->List[schemas.ShowComment]:
+#     raise NotImplementedError()
