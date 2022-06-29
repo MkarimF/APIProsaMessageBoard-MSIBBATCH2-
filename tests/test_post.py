@@ -180,7 +180,9 @@ def test_delete_post_by_id(client, embedded_db):
     response5 = client.post("/post/", json=initial_post_user_data2)
     assert response5.status_code == 200
     # delete post
-    response6 = client.delete("/post/2")
+    post_data = response5.json()
+    post_id = post_data["id"]
+    response6 = client.delete(f"/post/{post_id}")
     assert response6.status_code == 200
 
 
