@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 pg-data/
+*.vscode/
+*.pytest_cache/
+*.idea/
