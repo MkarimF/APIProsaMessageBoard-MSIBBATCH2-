@@ -19,7 +19,7 @@ def orm_to_post(post: models.Post) -> schemas.ShowPost:
                             comments=[orm_to_comment(comment) for comment in post.comments])
 
 
-@router.get("/alltab", response_model=List[schemas.ShowPost])
+@router.get("/all_tab", response_model=List[schemas.ShowPost])
 def all_post(
         db: Session = Depends(get_db),
         current_user: schemas.User = Depends(oauth2.get_current_user)) -> schemas.ShowPost:

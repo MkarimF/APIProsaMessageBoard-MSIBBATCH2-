@@ -7,21 +7,21 @@ def test_post_create(client, embedded_db):
     initial_post1 = {
         "title": "test_title1",
         "text": "test_text1"}
-    # membuat User 1
+    # create User 1
     response = client.post("/user/", json=initial_user_data1)
     assert response.status_code == 200
 
-    # inisialisasi data login
+    # Initialize data login
     user_data_login = response.json()
     assert user_data_login["username"] == initial_user_data1["username"]
     assert user_data_login["email"] == initial_user_data1["email"]
     assert response.status_code == 200
 
-    # login dengan data user
+    # login with data user
     response3 = client.post("/login", json={"username": "test_user1", "password": "test_password1"})
     assert response3.status_code == 200
 
-    # authentikasi data pada user
+    # authentication data to user
     client.headers["authorization"] = f"Bearer {response3.json()['access_token']}"
     assert response3.status_code == 200
 
@@ -54,11 +54,11 @@ def test_get_all_posts(client, embedded_db):
     assert user_data1["email"] == initial_user_data1["email"]
     assert response.status_code == 200
 
-    # login user yang sudah di create
+    # login user has been create
     response3 = client.post("/login", json={"username": "test_user1", "password": "test_password1"})
     assert response3.status_code == 200
 
-    # auth dikasih ke user 1
+    # auth given to user 1
     client.headers["authorization"] = f"Bearer {response3.json()['access_token']}"
 
     # posted post-1
@@ -66,7 +66,7 @@ def test_get_all_posts(client, embedded_db):
     assert response4.status_code == 200
 
     # get post-1
-    response6 = client.get("/post/alltab")
+    response6 = client.get("/post/all_tab")
     assert response6.status_code == 200
 
 
@@ -95,23 +95,23 @@ def test_get_post_by_id(client, embedded_db):
     response2 = client.post("/user/", json=initial_user_data2)
     assert response2.status_code == 200
 
-    # inisialisasi data user
+    # initialize data user
     user_data1 = response.json()
     assert user_data1["username"] == initial_user_data1["username"]
     assert user_data1["email"] == initial_user_data1["email"]
 
-    # login user yang sudah di created 1
+    # login user has been created 1
     response3 = client.post("/login", json={"username": "test_user1", "password": "test_password1"})
     assert response3.status_code == 200
 
-    # authentication pada user 1
+    # authentication to user 1
     client.headers["authorization"] = f"Bearer {response3.json()['access_token']}"
 
     # posted post data 1
     response5 = client.post("/post/", json=initial_post1)
     assert response5.status_code == 200
 
-    # inisialisasi data user ke 2
+    # initialize data user ke 2
     user_data2 = response.json()
     assert user_data2["username"] == initial_user_data1["username"]
     assert user_data2["email"] == initial_user_data1["email"]
